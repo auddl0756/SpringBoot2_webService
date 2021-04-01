@@ -41,6 +41,8 @@ dependencies {
     compile('org.springframework.boot:spring-boot-starter-data-jpa')
     compile('com.h2database:h2')
 
+    //for mustache template engine
+    compile('org.springframework.boot:spring-boot-starter-mustache')
 
 }
 
