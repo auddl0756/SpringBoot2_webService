@@ -1,6 +1,5 @@
 # Project exclude paths
 application-oauth.properties
-application.properties
 
 
 # Created by https://www.toptal.com/developers/gitignore/api/java,gradle,intellij

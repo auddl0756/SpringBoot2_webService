@@ -18,15 +18,14 @@ import java.util.stream.Collectors;
 @Service
 public class PostsService {
     private final PostsRepository postsRepository;
-    private static final int TIME_OUT_SECOND = 1;
     private static final String EXCEPTION_NO_POST = "글이 존재하지 않습니다.";
 
-    @Transactional(timeout = TIME_OUT_SECOND)
+    @Transactional
     public long save(PostsSaveRequestDto requestDto) {
         return postsRepository.save(requestDto.toEntity()).getId();
     }
 
-    @Transactional(timeout = TIME_OUT_SECOND)
+    @Transactional
     public Long update(Long id, PostsUpdateRequestDto requestDto) {
         Posts posts = postsRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException(EXCEPTION_NO_POST + " 글 id = " + id));
@@ -36,7 +35,7 @@ public class PostsService {
         return id;
     }
 
-    @Transactional(timeout = TIME_OUT_SECOND, readOnly = true)
+    @Transactional(readOnly = true)
     public PostsResponseDto findById(Long id) {
         Posts entity = postsRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException(EXCEPTION_NO_POST + " 글 id = " + id));
@@ -44,14 +43,14 @@ public class PostsService {
         return new PostsResponseDto(entity);
     }
 
-    @Transactional(timeout = TIME_OUT_SECOND, readOnly = true)
+    @Transactional(readOnly = true)
     public List<PostsListResponseDto> findAllDesc() {
         return postsRepository.findAllDesc().stream()
                 .map(PostsListResponseDto::new)
                 .collect(Collectors.toList());
     }
 
-    @Transactional(timeout = TIME_OUT_SECOND)
+    @Transactional
     public void delete(Long id) {
         Posts posts = postsRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException(EXCEPTION_NO_POST + " 글 id = " + id));
