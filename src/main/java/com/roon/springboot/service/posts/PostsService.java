@@ -18,8 +18,9 @@ import java.util.stream.Collectors;
 @Service
 public class PostsService {
     private final PostsRepository postsRepository;
+    private static final int TIME_OUT_SECOND = 1;
 
-    @Transactional
+    @Transactional(timeout = TIME_OUT_SECOND)
     public long save(PostsSaveRequestDto requestDto) {
         return postsRepository.save(requestDto.toEntity()).getId();
     }
