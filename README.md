@@ -3,5 +3,7 @@
 ## hikari CP
 [connection pool size에 대한 공식 문서](https://github.com/brettwooldridge/HikariCP/wiki/About-Pool-Sizing)
 
+![img.png](img.png)
+
 ## springBoot
 1. @Transactional
