@@ -20,42 +20,41 @@ public class PostsService {
     private final PostsRepository postsRepository;
 
     @Transactional
-    public long save(PostsSaveRequestDto requestDto){
+    public long save(PostsSaveRequestDto requestDto) {
         return postsRepository.save(requestDto.toEntity()).getId();
     }
 
     @Transactional
-    public Long update(Long id, PostsUpdateRequestDto requestDto){
+    public Long update(Long id, PostsUpdateRequestDto requestDto) {
         Posts posts = postsRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("no board. id="+id));
+                .orElseThrow(() -> new IllegalArgumentException("no board. id=" + id));
 
-        posts.update(requestDto.getTitle(),requestDto.getContent());
+        posts.update(requestDto.getTitle(), requestDto.getContent());
 
         return id;
     }
 
-    public PostsResponseDto findById(Long id){
+    public PostsResponseDto findById(Long id) {
         Posts entity = postsRepository.findById(id)
-                .orElseThrow( ()->new IllegalArgumentException("no board. id="+id));
+                .orElseThrow(() -> new IllegalArgumentException("no board. id=" + id));
 
         return new PostsResponseDto(entity);
     }
 
     @Transactional(readOnly = true)
-    public List<PostsListResponseDto> findAllDesc(){
+    public List<PostsListResponseDto> findAllDesc() {
         return postsRepository.findAllDesc().stream()
                 .map(PostsListResponseDto::new)
                 .collect(Collectors.toList());
     }
 
     @Transactional
-    public void delete(Long id){
+    public void delete(Long id) {
         Posts posts = postsRepository.findById(id)
-                .orElseThrow(()->new IllegalArgumentException("no board. id="+id));
+                .orElseThrow(() -> new IllegalArgumentException("no board. id=" + id));
 
         postsRepository.delete(posts);
     }
-
 
 
 }
