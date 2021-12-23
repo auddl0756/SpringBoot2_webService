@@ -36,7 +36,7 @@ public class PostsApiController {
 
     @ResponseStatus
     @ExceptionHandler(IllegalArgumentException.class)
-    public ExceptionDto illegarArgumentHander(IllegalArgumentException argumentException){
+    public ExceptionDto illegalArgumentHandler(IllegalArgumentException argumentException){
         return new ExceptionDto("BAD_REQUEST",argumentException.getMessage());
     }
 }
