@@ -6,8 +6,13 @@ import com.roon.springboot.web.dto.PostsResponseDto;
 import com.roon.springboot.web.dto.PostsSaveRequestDto;
 import com.roon.springboot.web.dto.PostsUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
+@Log4j2
 @RequiredArgsConstructor
 @RestController
 public class PostsApiController {
@@ -26,6 +31,13 @@ public class PostsApiController {
     @GetMapping("/api/v1/posts/{id}")
     public PostsResponseDto findById(@PathVariable Long id) {
         return postsService.findById(id);
+    }
+
+    @GetMapping("/api/v1/posts")
+    public List<PostsResponseDto> findByKeywordAndPaged(String keyword, int pageNumber){
+        log.info(keyword+" "+pageNumber);
+
+        return postsService.findByKeywordAndPaged(keyword,pageNumber);
     }
 
     @DeleteMapping("/api/v1/posts/{id}")
