@@ -1,6 +1,7 @@
 package com.roon.springboot.web;
 
 import com.roon.springboot.service.posts.PostsService;
+import com.roon.springboot.web.dto.ExceptionDto;
 import com.roon.springboot.web.dto.PostsResponseDto;
 import com.roon.springboot.web.dto.PostsSaveRequestDto;
 import com.roon.springboot.web.dto.PostsUpdateRequestDto;
@@ -33,4 +34,9 @@ public class PostsApiController {
         return id;
     }
 
+    @ResponseStatus
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ExceptionDto illegarArgumentHander(IllegalArgumentException argumentException){
+        return new ExceptionDto("BAD_REQUEST",argumentException.getMessage());
+    }
 }
