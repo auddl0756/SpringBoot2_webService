@@ -1,7 +1,13 @@
 ## 여러 가지 테스트해보는 실험실
-1. 검색 기능 
-2. queryDSL
+### 검색 기능
 
+- [x] @Query
+- [ ] 쿼리메서드
+- [ ] queryDSL 
+
+### 예외 처리
+- [x] @ExceptionHandler 
+- [ ] @ContorllerAdvice 
 
 ## 트랜잭션에 대한 연구..
 ### hikari CP
