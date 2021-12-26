@@ -45,10 +45,4 @@ public class PostsApiController {
         postsService.delete(id);
         return id;
     }
-
-    @ResponseStatus
-    @ExceptionHandler(IllegalArgumentException.class)
-    public ExceptionDto illegalArgumentHandler(IllegalArgumentException argumentException){
-        return new ExceptionDto("BAD_REQUEST",argumentException.getMessage());
-    }
 }
