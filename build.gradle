@@ -20,7 +20,7 @@ apply plugin: 'io.spring.dependency-management'
 
 group 'org.example'
 version '1.0-SNAPSHOT'
-sourceCompatibility = 1.8
+sourceCompatibility ='11'
 
 
 repositories {
@@ -43,6 +43,9 @@ dependencies {
 
     //for mustache template engine
     compile('org.springframework.boot:spring-boot-starter-mustache')
+
+    // https://mvnrepository.com/artifact/mysql/mysql-connector-java
+    implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.27'
 
 }
 
