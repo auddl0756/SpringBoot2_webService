@@ -7,6 +7,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import javax.persistence.EntityNotFoundException;
+
 @Log4j2
 @RestControllerAdvice
 public class GlobalControllerAdvice {
@@ -26,5 +28,21 @@ public class GlobalControllerAdvice {
     public NotEnoughMoneyException notEnoughMoneyException(NotEnoughMoneyException notEnoughMoneyException) {
         log.info("통장 잔고가 모자라요....");
         return new NotEnoughMoneyException("통장 잔고가 모자라요", HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(value = EntityNotFoundException.class)
+    public ResponseEntity<String> entityNotFoundException(EntityNotFoundException e) {
+        log.info("entity 없음");
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+    }
+
+    @ExceptionHandler(value = InterruptedException.class)
+    public void 귀찮군() {
+
+    }
+
+    @ExceptionHandler(value = RuntimeException.class)
+    public void 귀찮군2(RuntimeException e) {
+        log.info(e.getMessage());
     }
 }
