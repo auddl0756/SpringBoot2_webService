@@ -11,14 +11,20 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class GlobalControllerAdvice {
     @ExceptionHandler(value = Exception.class)
-    public ResponseEntity<String> exception(Exception exception){
+    public ResponseEntity<String> exception(Exception exception) {
         log.info("exception catched");
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(exception.getMessage());
     }
 
     @ExceptionHandler(value = IllegalArgumentException.class)
-    public ResponseEntity<String> illegalArgException(IllegalArgumentException illegalArgException){
+    public ResponseEntity<String> illegalArgException(IllegalArgumentException illegalArgException) {
         log.info("IllegalArgumentException catched");
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(illegalArgException.getMessage());
+    }
+
+    @ExceptionHandler(value = NotEnoughMoneyException.class)
+    public NotEnoughMoneyException notEnoughMoneyException(NotEnoughMoneyException notEnoughMoneyException) {
+        log.info("통장 잔고가 모자라요....");
+        return new NotEnoughMoneyException("통장 잔고가 모자라요", HttpStatus.BAD_REQUEST);
     }
 }

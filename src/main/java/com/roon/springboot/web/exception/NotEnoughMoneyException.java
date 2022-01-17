@@ -1,0 +1,14 @@
+package com.roon.springboot.web.exception;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.http.HttpStatus;
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
+public class NotEnoughMoneyException extends RuntimeException {
+    private String message;
+    private HttpStatus status;
+}
