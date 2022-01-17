@@ -5,7 +5,6 @@ import com.roon.springboot.domain.posts.PostsRepository;
 import com.roon.springboot.web.dto.PostsResponseDto;
 import com.roon.springboot.web.dto.PostsSaveRequestDto;
 import com.roon.springboot.web.dto.PostsUpdateRequestDto;
-import javafx.geometry.Pos;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

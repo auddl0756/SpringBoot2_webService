@@ -15,7 +15,7 @@ public class BookServiceTest {
     private BookService bookService;
 
     @Test
-    public void notNullTest(){
+    public void notNullTest() {
         System.out.println(bookService);
         assertThat(bookService).isNotNull();
 
@@ -23,23 +23,23 @@ public class BookServiceTest {
 
     @Test
     public void test() {
-        Thread thread1 = new Thread( () -> {
-            try{
-                bookService.increaseStock("1",5);
-            }catch (Exception e){
+        Thread thread1 = new Thread(() -> {
+            try {
+                bookService.increaseStock("1", 5);
+            } catch (Exception e) {
                 System.out.println(e.getMessage());
             }
-        },"Thread 1");
+        }, "Thread 1");
 
-        Thread thread2 = new Thread(()->{
+        Thread thread2 = new Thread(() -> {
             bookService.checkStock("1");
-        },"Thread 2");
+        }, "Thread 2");
 
         thread1.start();
 
         try {
             Thread.sleep(5000);
-        }catch (InterruptedException e){
+        } catch (InterruptedException e) {
             System.out.println(e.getMessage());
         }
 
@@ -47,7 +47,7 @@ public class BookServiceTest {
 
         try {
             Thread.sleep(10000);
-        }catch (InterruptedException e){
+        } catch (InterruptedException e) {
             System.out.println(e.getMessage());
         }
     }

@@ -80,9 +80,9 @@ public class BookService {
     }
 
     @Transactional(isolation = Isolation.READ_UNCOMMITTED)
-    public int checkStock(String bookNumber)  {
+    public int checkStock(String bookNumber) {
         String threadName = Thread.currentThread().getName();
-        System.out.println(threadName+" preparing to check stock");
+        System.out.println(threadName + " preparing to check stock");
 
         BookStock bookStock = bookStockRepository.getOne(bookNumber);
         System.out.println(threadName + " book stock is " + bookStock.getStock());
@@ -92,11 +92,11 @@ public class BookService {
         return bookStock.getStock();
     }
 
-    private void sleep(String threadName)  {
+    private void sleep(String threadName) {
         System.out.println(threadName + " is sleeping");
-        try{
+        try {
             Thread.sleep(10000);
-        }catch (InterruptedException e){
+        } catch (InterruptedException e) {
             System.out.println(e.getMessage());
         }
 
