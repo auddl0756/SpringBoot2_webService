@@ -15,4 +15,8 @@ public class BookStock {
     public void sell(int count) {
         stock -= count;
     }
+
+    public void add(int count){
+        stock += count;
+    }
 }
