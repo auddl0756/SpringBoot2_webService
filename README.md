@@ -7,7 +7,7 @@
 
 ### 예외 처리
 - [x] @ExceptionHandler 
-- [ ] @ContorllerAdvice 
+- [x] @ContorllerAdvice 
 
 ## 트랜잭션에 대한 연구..
 ### hikari CP
