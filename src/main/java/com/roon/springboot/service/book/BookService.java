@@ -19,7 +19,8 @@ public class BookService {
 
 
 //    @Transactional
-    @Transactional(propagation = Propagation.REQUIRED)  // 기존 트랙잭션이 있다면, 기존 트랜잭션이 주도함
+    @Transactional(propagation = Propagation.REQUIRES_NEW)  //무조건 새 트랜잭션 만들기 (기존 트랜잭션은 잠시 중단)  =>  꽤 좋을듯?
+//    @Transactional(propagation = Propagation.REQUIRED)  // 기존 트랙잭션이 있다면, 기존 트랜잭션이 주도함
     public void purchase(String username, String bookNumber){
         // 1. 책 가격 조회
         // 2. 통장 잔고 조회
