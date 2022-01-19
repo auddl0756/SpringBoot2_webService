@@ -81,7 +81,7 @@ public class BookService {
         throw new RuntimeException("increased by mistake");
     }
 
-    @Transactional(isolation = Isolation.READ_UNCOMMITTED)
+    @Transactional(isolation = Isolation.READ_COMMITTED)
     public int checkStock(String bookNumber) {
         String threadName = Thread.currentThread().getName();
         System.out.println(threadName + " preparing to check stock");
