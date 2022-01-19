@@ -14,9 +14,43 @@ public class BookServiceTest {
     @Autowired
     private BookService bookService;
 
+    @Autowired
+    private BookService_JDBC bookServiceJdbc;
+
     @Test
     public void notNullTest() {
         assertThat(bookService).isNotNull();
+    }
+
+    @Test
+    public void REPEATABLE_READ_JDBC_test(){
+        Thread t1 = new Thread(() ->{
+            bookServiceJdbc.checkStock("1");
+        },"Thread 1");
+
+        Thread t2 = new Thread(()->{
+            try{
+                bookServiceJdbc.increaseStock("1",5);
+            }catch(RuntimeException e){
+                System.out.println(e.getMessage());
+            }
+        },"Thread 2");
+
+        t1.start();
+
+        try{
+            Thread.sleep(2000);
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }finally {
+            t2.start();
+        }
+
+        try {
+            Thread.sleep(10000);
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
     }
 
     @Test
@@ -48,8 +82,6 @@ public class BookServiceTest {
         }catch (Exception e){
             System.out.println(e.getMessage());
         }
-
-//        System.out.println(bookService.checkStock("1"));
 
     }
 
