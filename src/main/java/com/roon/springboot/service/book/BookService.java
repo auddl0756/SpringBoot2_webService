@@ -72,6 +72,8 @@ public class BookService {
 
         bookStock.add(count);
         System.out.println(threadName + " book stock increased by " + count);
+        bookStockRepository.save(bookStock);
+        bookStockRepository.flush();
 
         sleep(threadName);
 
