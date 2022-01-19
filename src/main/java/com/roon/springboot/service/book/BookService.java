@@ -64,7 +64,7 @@ public class BookService {
         }
     }
 
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    @Transactional(propagation = Propagation.REQUIRED)  //default
     public void increaseStock(String bookNumber, int count) throws EntityNotFoundException {
         String threadName = Thread.currentThread().getName();
 
