@@ -26,10 +26,6 @@ public class BookService {
     @Transactional(propagation = Propagation.REQUIRES_NEW)  //무조건 새 트랜잭션 만들기 (기존 트랜잭션은 잠시 중단)  =>  꽤 좋을듯?
 //    @Transactional(propagation = Propagation.REQUIRED)  // 기존 트랙잭션이 있다면, 기존 트랜잭션이 주도함
     public void purchase(String username, String bookNumber) throws NotEnoughMoneyException, NoStockException {
-        // 1. 책 가격 조회
-        // 2. 통장 잔고 조회
-        // 3. 살 수 있으면 책 사기 , 책 재고 줄이기, 통장 잔고 줄이기
-
         Book book = bookRepository.findById(bookNumber)
                 .orElseThrow(() -> new IllegalArgumentException("해당 책 번호 없음"));
 
@@ -43,16 +39,6 @@ public class BookService {
         BookStock bookStock = bookStockRepository.findById(bookNumber)
                 .orElseThrow(() -> new IllegalArgumentException("해당 책 번호의 재고 정보 없음"));
 
-
-//        // 이런식으로도 하는지..?
-//        if(price > balance){
-//            throw new NotEnoughMoneyException();
-//        }
-//
-//        if(bookStock.getStock() <= 0 ){
-//            throw new NoStockException();
-//        }
-
         account.pay(price);
         bookStock.sell(1);
     }
@@ -64,38 +50,43 @@ public class BookService {
         }
     }
 
-    @Transactional(propagation = Propagation.REQUIRED)  //default
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED)  //default
     public void increaseStock(String bookNumber, int count) throws EntityNotFoundException {
         String threadName = Thread.currentThread().getName();
 
         BookStock bookStock = bookStockRepository.getOne(bookNumber);
 
         bookStock.add(count);
-        System.out.println(threadName + " book stock increased by " + count);
+        System.out.println(threadName + " book stock increased by " + count +", so now stock = "+bookStock.getStock());
+
         bookStockRepository.save(bookStock);
         bookStockRepository.flush();
 
-        sleep(threadName);
+        //sleep(threadName);
 
-        System.out.println(threadName + " rolled back");
-        throw new RuntimeException("increased by mistake");
+        //System.out.println(threadName + " rolled back");
+        //throw new RuntimeException("increased by mistake");
+
+        System.out.println(threadName + " has been committed");
     }
 
     @Transactional(isolation = Isolation.READ_COMMITTED)
     public int checkStock(String bookNumber) {
         String threadName = Thread.currentThread().getName();
-        System.out.println(threadName + " preparing to check stock");
 
         BookStock bookStock = bookStockRepository.getOne(bookNumber);
-        System.out.println(threadName + " book stock is " + bookStock.getStock());
+        System.out.println(threadName + " 첫번째 조회, book stock = " + bookStock.getStock());
 
         sleep(threadName);
+
+        System.out.println(threadName + " 두번째 조회, book stock = " + bookStock.getStock());
 
         return bookStock.getStock();
     }
 
     private void sleep(String threadName) {
         System.out.println(threadName + " is sleeping");
+
         try {
             Thread.sleep(10000);
         } catch (InterruptedException e) {

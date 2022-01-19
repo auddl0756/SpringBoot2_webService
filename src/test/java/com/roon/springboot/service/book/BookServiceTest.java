@@ -16,13 +16,46 @@ public class BookServiceTest {
 
     @Test
     public void notNullTest() {
-        System.out.println(bookService);
         assertThat(bookService).isNotNull();
+    }
+
+    @Test
+    public void REPEATABLE_READ_test(){
+        Thread t1 = new Thread(() ->{
+            bookService.checkStock("1");
+        },"Thread 1");
+
+        Thread t2 = new Thread(()->{
+            try{
+                bookService.increaseStock("1",5);
+            }catch(RuntimeException e){
+                System.out.println(e.getMessage());
+            }
+        },"Thread 2");
+
+        t1.start();
+
+        try{
+            Thread.sleep(2000);
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }finally {
+            t2.start();
+        }
+
+        try {
+            Thread.sleep(10000);
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+
+//        System.out.println(bookService.checkStock("1"));
 
     }
 
     @Test
-    public void test() {
+    public void DIRTY_READ_test() {
+        // dirty read는 READ_COMMITTED로 고립성을 설정하면 해결됨.
         Thread thread1 = new Thread(() -> {
             try {
                 bookService.increaseStock("1", 5);
